@@ -18,7 +18,7 @@ class GoogleAdapter implements CheckerAdapter
 
     public function getPageRank()
     {
-        //it was discontinued
+        //it has been discontinued
         return '0';
     }
 
@@ -45,9 +45,14 @@ class GoogleAdapter implements CheckerAdapter
 
     private function getResponse($queryOptions)
     {
-        $apiKey = $this->app['config']['webservice']['google']['api_key'];
-        $cx = $this->app['config']['webservice']['google']['cx'];
-        $url = "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=$cx&$queryOptions";
-        return json_decode($this->httpClient->request('GET', $url)->getBody()->getContents(), true);
+        try {
+            $apiKey = $this->app['config']['webservice']['google']['api_key'];
+            $cx = $this->app['config']['webservice']['google']['cx'];
+            $url = "https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=$cx&$queryOptions";
+            return json_decode($this->httpClient->request('GET', $url)->getBody()->getContents(), true);
+        } catch (\Exception $e) {
+            $this->app['monolog']->addError($e->getMessage() . ' - ' . $e->getFile());
+            return [];
+        }
     }
 }

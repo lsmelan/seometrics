@@ -15,16 +15,22 @@ class AlexaAdapter implements CheckerAdapter
 
     public function getPageRank()
     {
-        return 'PageRank';
+        $rank = '0';
+
+        try {
+            $xml = simplexml_load_file("http://data.alexa.com/data?cli=10&url=$this->domain");
+
+            if (isset($xml->SD->REACH) && $xml->SD->REACH instanceof \SimpleXMLElement) {
+                $rank = (string) $xml->SD->REACH->attributes()->RANK;
+            }
+        } catch (\Exception $e) {
+            $this->app['monolog']->addError($e->getMessage() . ' - ' . $e->getFile());
+        }
+
+        return $rank;
     }
 
-    public function getIndexedPages()
-    {
+    public function getIndexedPages(){}
 
-    }
-
-    public function getBackLinks()
-    {
-
-    }
+    public function getBackLinks(){}
 }

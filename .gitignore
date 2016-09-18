@@ -1,3 +1,4 @@
 vendor/
 .idea/
 src/App/Config/settings.yml
+*.log

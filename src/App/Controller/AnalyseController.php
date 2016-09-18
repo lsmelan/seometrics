@@ -17,7 +17,8 @@ class AnalyseController
             $response = $service->fetch($checker, $domain);
             return $app->json($response);
         } catch (\Exception $e) {
-            return $app->json(['Invalid Request'], 404);
+            $app['monolog']->addError($e->getMessage() . ' - ' . $e->getFile());
+            return $app->json(['status' => 'Not Found', 'code' => '404'], 404);
         }
     }
 
