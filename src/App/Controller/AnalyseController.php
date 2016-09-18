@@ -7,27 +7,18 @@ use App\Service\AnalyseService;
 
 class AnalyseController
 {
-    private $service;
-
-    public function __construct()
-    {
-        $this->service = new AnalyseService();
-    }
-
     public function get(Request $request, Application $app)
     {
-        $response = [];
-
         try {
+            $service = new AnalyseService($app);
             $domain = $request->get('domain');
             $checker = $request->get('checker', CheckerAdapter::ALL);
             $this->validate($checker, $domain);
-            $response = $this->service->fetch($checker, $domain);
+            $response = $service->fetch($checker, $domain);
+            return $app->json($response);
         } catch (\Exception $e) {
-            $app->abort(404);
+            return $app->json(['Invalid Request'], 404);
         }
-
-        return $app->json($response);
     }
 
     private function validate($checker, $domain)
@@ -43,7 +34,7 @@ class AnalyseController
         }
 
         if (!$valid) {
-            throw new \HttpInvalidParamException;
+            throw new \InvalidArgumentException;
         }
     }
 }

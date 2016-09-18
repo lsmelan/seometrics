@@ -1,5 +1,6 @@
 <?php
 namespace App\Model;
+use Silex\Application;
 
 interface CheckerAdapter
 {
@@ -7,7 +8,7 @@ interface CheckerAdapter
     const GOOGLE = 'google';
     const ALEXA = 'alexa';
 
-    public function __construct($domain);
+    public function __construct($domain, Application $app);
 
     public function getPageRank();
 

@@ -1,9 +1,17 @@
 <?php
 namespace App\Service;
+use Silex\Application;
 use App\Model\CheckerAdapter;
 
 class AnalyseService
 {
+    private $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public static $checkers = [
         CheckerAdapter::GOOGLE => CheckerAdapter::GOOGLE,
         CheckerAdapter::ALEXA => CheckerAdapter::ALEXA
@@ -38,6 +46,6 @@ class AnalyseService
     private function getAdapter($checker, $domain)
     {
         $className = 'App\\Model\\'. ucfirst($checker) . 'Adapter';
-        return new $className($domain);
+        return new $className($domain, $this->app);
     }
 }

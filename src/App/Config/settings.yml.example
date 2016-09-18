@@ -1,0 +1,4 @@
+webservice:
+    google:
+        api_key: 11111111
+        cx: 00000000
