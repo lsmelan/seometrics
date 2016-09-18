@@ -3,6 +3,7 @@ namespace App\Model;
 
 interface CheckerAdapter
 {
+    const ALL = 'all';
     const GOOGLE = 'google';
     const ALEXA = 'alexa';
 

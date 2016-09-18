@@ -4,7 +4,7 @@ use App\Model\CheckerAdapter;
 
 class AnalyseService
 {
-    private static $checkers = [
+    public static $checkers = [
         CheckerAdapter::GOOGLE => CheckerAdapter::GOOGLE,
         CheckerAdapter::ALEXA => CheckerAdapter::ALEXA
     ];
