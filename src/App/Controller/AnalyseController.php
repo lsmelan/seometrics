@@ -15,10 +15,11 @@ class AnalyseController
             $checker = $request->get('checker', CheckerAdapter::ALL);
             $this->validate($checker, $domain);
             $response = $service->fetch($checker, $domain);
-            return $app->json($response);
+            return $app->json($response, 200, ['Access-Control-Allow-Origin' => '*']);
         } catch (\Exception $e) {
             $app['monolog']->addError($e->getMessage() . ' - ' . $e->getFile());
-            return $app->json(['status' => 'Not Found', 'code' => '404'], 404);
+            $response = ['status' => 'Not Found', 'code' => '404'];
+            return $app->json($response, 404, ['Access-Control-Allow-Origin' => '*']);
         }
     }
 
@@ -27,6 +28,10 @@ class AnalyseController
         $valid = true;
 
         if(!filter_var(gethostbyname($domain), FILTER_VALIDATE_IP)) {
+            $valid = false;
+        }
+
+        if (is_numeric($domain)) {
             $valid = false;
         }
 

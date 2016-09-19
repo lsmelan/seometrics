@@ -32,15 +32,15 @@ class GoogleAdapter implements CheckerAdapter
     {
         $res = $this->getResponse("q=link:$this->domain");
         $total = $res['queries']['request'][0]['totalResults'] ?? 0;
-        $links = [];
+        $list = [];
 
         if (isset($res['items']) && is_array($res['items'])) {
             foreach ($res['items'] as $item) {
-                $links[] = $item['link'];
+                $list[] = $item['link'];
             }
         }
 
-        return ['total' => $total, 'links' => $links];
+        return ['total' => $total, 'list' => $list];
     }
 
     private function getResponse($queryOptions)
