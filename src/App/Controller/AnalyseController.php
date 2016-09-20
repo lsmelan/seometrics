@@ -18,7 +18,7 @@ class AnalyseController
             return $app->json($response, 200, ['Access-Control-Allow-Origin' => '*']);
         } catch (\Exception $e) {
             $app['monolog']->addError($e->getMessage() . ' - ' . $e->getFile());
-            $response = ['status' => 'Not Found', 'code' => '404'];
+            $response = ['status' => 'Domain not found', 'code' => '404'];
             return $app->json($response, 404, ['Access-Control-Allow-Origin' => '*']);
         }
     }

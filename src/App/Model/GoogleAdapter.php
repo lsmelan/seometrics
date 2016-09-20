@@ -19,19 +19,19 @@ class GoogleAdapter implements CheckerAdapter
     public function getPageRank()
     {
         //it has been discontinued
-        return '0';
+        return 'n/a';
     }
 
     public function getIndexedPages()
     {
         $res = $this->getResponse("q=site:$this->domain");
-        return $res['queries']['request'][0]['totalResults'] ?? 0;
+        return $res['queries']['request'][0]['totalResults'] ?? 'n/a';
     }
 
     public function getBackLinks()
     {
         $res = $this->getResponse("q=link:$this->domain");
-        $total = $res['queries']['request'][0]['totalResults'] ?? 0;
+        $total = $res['queries']['request'][0]['totalResults'] ?? 'n/a';
         $list = [];
 
         if (isset($res['items']) && is_array($res['items'])) {

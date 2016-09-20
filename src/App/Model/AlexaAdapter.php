@@ -15,7 +15,7 @@ class AlexaAdapter implements CheckerAdapter
 
     public function getPageRank()
     {
-        $rank = '0';
+        $rank = 'n/a';
 
         try {
             $xml = simplexml_load_file("http://data.alexa.com/data?cli=10&url=$this->domain");
